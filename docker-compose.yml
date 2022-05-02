@@ -1,0 +1,33 @@
+version: "3.5"
+services:
+
+  php:
+    build:
+      context: php
+    ports:
+      - 127.0.0.1:80:80
+    volumes:
+      - W:\docker\docker_lamp\app:/var/www/html
+      - W:\docker\docker_lamp\configs/nginx:/etc/nginx/conf.d
+      - W:\docker\docker_lamp\logs/nginx:/var/log/nginx
+
+  mariadb:
+    image: mariadb:10.4
+    ports:
+      - 127.0.0.1:3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: koorochka
+      MYSQL_DATABASE: koorochka
+      MYSQL_USER: koorochka
+      MYSQL_PASSWORD: koorochka
+    volumes:
+      - W:\docker\docker_lamp\databases\mariadb:/var/lib/mysql
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    ports:
+      - 127.0.0.1:8080:80
+    environment:
+      PMA_HOST: mardiadb
+      PMA_USER: koorochka
+      PMA_PASSWORD: koorochka
